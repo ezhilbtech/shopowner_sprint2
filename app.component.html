@@ -1,0 +1,106 @@
+<!-- Registration / Edit Form -->
+<div>
+  <div style="height:100vh;">
+    <div>
+      <div class="shadow w-20 p-5 position-absolute top-50 start-50 translate-middle">
+        <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+          <h4 class="display-6 text-center py-2">{{ isEditing ? 'Edit Shopowner' : 'Register Shopowner' }}</h4>
+
+          <!-- Shop ID (non-editable during editing) -->
+          <div class="form-group" *ngIf="!isEditing">
+            <label for="shopId">Shop ID</label>
+            <div>
+              <input id="shopId" required #shopId="ngModel" [(ngModel)]="shopownerToUpdate.id" name="shopId" type="text"
+                class="form-control" placeholder="Enter your Shop ID">
+              <div *ngIf="shopId.invalid && shopId.touched">
+                <small class="text-danger" *ngIf="shopId.errors?.['required']">Required</small>
+              </div>
+            </div>
+          </div><br>
+
+          <!-- Shop Name -->
+          <div>
+            <label for="shopName">Shop Name</label>
+            <div>
+              <input id="shopName" required #shopName="ngModel" [(ngModel)]="shopownerToUpdate.shopName" name="shopName"
+                type="text" class="form-control" placeholder="Enter your Shop Name">
+              <div *ngIf="shopName.invalid && shopName.touched">
+                <small class="text-danger" *ngIf="shopName.errors?.['required']">Required</small>
+              </div>
+            </div>
+          </div><br>
+
+          <!-- Owner Name -->
+          <div class="form-group">
+            <label for="ownerName">Owner Name</label>
+            <div>
+              <input id="ownerName" required #ownerName="ngModel" [(ngModel)]="shopownerToUpdate.ownerName" name="ownerName"
+                type="text" class="form-control" placeholder="Enter Owner Name">
+              <div *ngIf="ownerName.invalid && ownerName.touched">
+                <small class="text-danger" *ngIf="ownerName.errors?.['required']">Required</small>
+              </div>
+            </div>
+          </div><br>
+
+          <!-- Email -->
+          <div>
+            <label for="email">Email</label>
+            <div>
+              <input id="email" required #email="ngModel" [(ngModel)]="shopownerToUpdate.email" name="email" type="email"
+                class="form-control" placeholder="Enter your Email">
+              <div *ngIf="email.invalid && email.touched">
+                <small class="text-danger" *ngIf="email.errors?.['required']">Required</small>
+              </div>
+            </div>
+          </div><br>
+
+          <!-- Address -->
+          <div>
+            <label for="address">Address</label>
+            <div>
+              <input id="address" required #address="ngModel" [(ngModel)]="shopownerToUpdate.address" name="address" type="text"
+                class="form-control" placeholder="Enter your Address">
+              <div *ngIf="address.invalid && address.touched">
+                <small class="text-danger" *ngIf="address.errors?.['required']">Required</small>
+              </div>
+            </div>
+          </div><br>
+
+          <!-- Submit Button (changes to "Update" if editing) -->
+          <div class="form-group text-center">
+            <input class="btn btn-primary" type="submit" [value]="isEditing ? 'Update' : 'Submit'">
+            <button *ngIf="isEditing" class="btn btn-secondary ms-2" (click)="resetForm(registerForm)">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Table for shopowner details -->
+<div class="mt-5">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Shop ID</th>
+        <th>Shop Name</th>
+        <th>Owner Name</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let shopowner of shopownerDetails">
+        <td>{{ shopowner.id }}</td>
+        <td>{{ shopowner.shopName }}</td>
+        <td>{{ shopowner.ownerName }}</td>
+        <td>{{ shopowner.email }}</td>
+        <td>{{ shopowner.address }}</td>
+        <td><button type="button" class="btn btn-primary" (click)="edit(shopowner)">Edit</button></td>
+        <td><button type="button" class="btn btn-danger" (click)="deleteShopowner(shopowner)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
